@@ -1,38 +1,112 @@
 .App {
-  text-align: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 50px;
+}
+.card__wrapper {
+    position: relative;
+    width: 340px;
+    height: 340px;
+}
+/* .card {
+    width: 340px;
+    height: 340px;
+    position: absolute;
+    top: 0;
+    left: 0;
+} */
+.front__background {
+    width: 100%;
+    height: 100%;
+}
+.cards {
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 50px;
+    justify-content: center;
+    align-items: center;
+}
+.card {
+    width: 340px;
+    height: 340px;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.clicked-front {
+    transform: perspective(600px) rotateY(-180deg) !important;
+}
+/* .card:hover .front {
+    transform: perspective(600px) rotateY(-180deg);
+} */
+.clicked-back {
+    transform: perspective(600px) rotateY(0) !important;
+}
+/* .card:hover .back {
+    transform: perspective(600px) rotateY(0);
+} */
+
+.front,
+.back {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: transform 0.5s ease;
+    border-radius: 10px;
+    /* background: linear-gradient(#d6d6d6, #f2f2f2); */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.front {
+    transform: perspective(600px) rotateY(0);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.back {
+    transform: perspective(600px) rotateY(180deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.back h1 {
+    color: #444;
+    font-size: 24px;
 }
 
-.App-link {
-  color: #61dafb;
+.back h1 span {
+    display: block;
+    font-size: 18px;
+    font-weight: 300;
+    margin: 5px 0 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.back .socials {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+.back .socials a {
+    color: #444;
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    border-radius: 50%;
+    transition: 0.4s ease;
+}
+
+.back .socials a:hover {
+    background-color: #444;
+    color: #fff;
 }
