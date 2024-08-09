@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import background from '../images/background-card.jpg';
 
 // function ClickedFront(e) {
@@ -10,53 +9,14 @@ import background from '../images/background-card.jpg';
 //     console.log(e.target);
 
 // }
-function Card({
-    color,
-    currentColor,
-    setCurrentColor,
-    counter,
-    setCounter,
-    createCard,
-    index,
-}) {
-    const [clicked, setClicked] = useState(false);
 
-    function checkColors(e) {
-        if (!clicked) {
-            setClicked(true);
-            // console.log(e.target.parentElement.parentElement.dataset.color);
-        } else {
-            setCurrentColor('');
-            setClicked(false);
-        }
-
-        // setClicked(true);
-        setTimeout(function () {
-            if (currentColor.length === 0) {
-                setCurrentColor(
-                    e.target.parentElement.parentElement.dataset.color
-                );
-                console.log(currentColor);
-                setCounter(counter + 1);
-            } else if (
-                currentColor ===
-                e.target.parentElement.parentElement.dataset.color
-            ) {
-                // setClicked(true);
-                setCurrentColor('');
-            } else {
-                setClicked(false);
-            }
-            console.log(counter);
-        }, 500);
-    }
-
+function Card({ color, opened, id, handleCardClick }) {
     return (
         <div className="card__wrapper">
             <div
                 className="card"
-                onClick={(e) => {
-                    checkColors(e);
+                onClick={() => {
+                    handleCardClick(id);
                     // if (clicked) {
                     //     setClicked(false);
                     //     console.log(currentColor);
@@ -66,7 +26,13 @@ function Card({
                 }}
                 data-color={color}
             >
-                <div className={clicked ? 'front clicked-front' : 'front'}>
+                <div
+                    className={`front  ${
+                        opened.findIndex((openId) => openId === id) !== -1
+                            ? 'clicked-front'
+                            : ''
+                    } `}
+                >
                     <img
                         src={background}
                         alt="bg"
@@ -74,7 +40,11 @@ function Card({
                     />
                 </div>
                 <div
-                    className={clicked ? 'back clicked-back' : 'back'}
+                    className={`back ${
+                        opened.findIndex((openId) => openId === id) !== -1
+                            ? 'clicked-back'
+                            : ''
+                    }`}
                     style={{ backgroundColor: color }}
                 >
                     <div className="content">
