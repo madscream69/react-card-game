@@ -16,7 +16,8 @@ function Card({ color, opened, id, handleCardClick }) {
             <div
                 className="card"
                 onClick={() => {
-                    handleCardClick(id);
+                    if (opened.findIndex((openId) => openId === id) === -1)
+                        handleCardClick(id);
                     // if (clicked) {
                     //     setClicked(false);
                     //     console.log(currentColor);

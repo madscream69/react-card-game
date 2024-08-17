@@ -1,6 +1,8 @@
 import Card from './components/Card';
 import './App.css';
 import { useEffect, useState } from 'react';
+import EndGame from './components/EndGame';
+import StartGame from './components/StartGame';
 
 // let randomColors = [
 //     '#EB6424',
@@ -22,8 +24,11 @@ import { useEffect, useState } from 'react';
 // ];
 // randomColors = randomColors.sort(() => Math.random() - 0.5);
 function App() {
+    const [counter, setCounter] = useState(0);
+    const [level, setLevel] = useState('');
     const [opened, setOpened] = useState([]);
     const [chosen, setChosen] = useState([]);
+    const [score, setScore] = useState(0);
     const [randomColors, setRandomColors] = useState([
         '#EB6424',
         '#50723C',
@@ -49,16 +54,28 @@ function App() {
     //     randomColors.push(colors[i]);
     // }
     // console.log(randomColor); calling 2 times because in the index.js we use StrictMode
-
+    function shuffleArray(array) {
+        const copy = [...array];
+        for (let i = copy.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            let temp = copy[i];
+            copy[i] = copy[j];
+            copy[j] = temp;
+        }
+        setRandomColors(copy);
+    }
     useEffect(() => {
-        setRandomColors(randomColors.sort(() => Math.random() - 0.5));
-    }, [randomColors]);
+        shuffleArray(randomColors);
+    }, []);
     // this piece for the future update of the hard levels
     // const randomColor = `#${Math.floor(Math.random() * 0xffffff)
     //     .toString(16)
     //     .padEnd(6, '0')}`;
     // console.log(randomColor);
     useEffect(() => {
+        if (level === 'Easy') {
+            document.querySelector('.startgame').classList.add('dn');
+        }
         if (chosen.length === 2) {
             if (
                 chosen[0] !== chosen[1] ||
@@ -73,14 +90,25 @@ function App() {
             }
             setChosen([]);
         }
-    }, [chosen, opened]);
+        if (opened.length === randomColors.length) {
+            setScore(Math.floor((randomColors.length / counter) * 100));
+            console.log(`Your score = ${score}`);
+        }
+    }, [chosen, opened, counter, randomColors, score, level]);
     const handleCardClick = (id) => {
         // console.log(id);
-        setOpened([...opened, id]);
-        setChosen([...chosen, randomColors[id]]);
+        setCounter(counter + 1);
+        console.log(counter);
+        if (chosen.length !== 2) {
+            setOpened([...opened, id]);
+            setChosen([...chosen, randomColors[id]]);
+        }
     };
     return (
         <div className="App">
+            <StartGame setLevel={setLevel}></StartGame>
+            {opened.length === randomColors.length && <EndGame score={score} />}
+
             <h1 className="app__title">Click on card and try to find couple</h1>
             <div className="cards">
                 {randomColors.map((color, index) => {

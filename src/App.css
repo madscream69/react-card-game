@@ -1,14 +1,28 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+li {
+    list-style-type: none;
+}
 .App {
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
 
+    position: relative;
     padding: 20px;
+
+    background-color: #72727230;
 }
 .app__title {
     margin-top: 0;
     margin-bottom: 15px;
+    text-transform: uppercase;
+    color: #000000b5;
 }
 .card__wrapper {
     position: relative;
@@ -113,4 +127,98 @@
 .back .socials a:hover {
     background-color: #444;
     color: #fff;
+}
+.endgame {
+    width: 100vw;
+    height: 100vh;
+    background-color: #000000b5;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 50px;
+    z-index: 1000;
+}
+.endgame__title {
+    font-size: 40px;
+    color: #fff;
+}
+.endgame__text {
+    font-size: 30px;
+    color: #fff;
+    font-weight: 700;
+}
+.endgame__text span {
+    color: rgb(230, 65, 32);
+}
+.endgame__btn {
+    padding: 15px 40px;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 16px;
+    background-color: rgb(230, 65, 32);
+    border: none;
+    cursor: pointer;
+}
+.startgame {
+    width: 100vw;
+    height: 100vh;
+    background-color: #000000b5;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 60px;
+    z-index: 1000;
+}
+.startgame__title {
+    color: #fff;
+    font-size: 50px;
+}
+.chooselvl {
+    display: flex;
+    gap: 50px;
+}
+.chooselvl__btn {
+    padding: 15px 40px;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 16px;
+    background-color: rgb(230, 65, 32);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+}
+.chooselvl__btn:hover {
+    color: rgb(230, 65, 32);
+    background-color: #fff;
+}
+.dn {
+    display: none;
+}
+@media (orientation: portrait) {
+    .cards {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+    .card {
+        width: 100px;
+        height: 100px;
+    }
+    .card__wrapper {
+        width: 100px;
+        height: 100px;
+    }
+    .endgame {
+        height: 100%;
+        padding: 20px;
+    }
 }
