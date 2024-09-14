@@ -5,17 +5,36 @@ function StartGame({ setLevel }) {
             <ul className="chooselvl">
                 <li className="chooselvl__item">
                     <button
-                        onClick={() => setLevel('Easy')}
+                        onClick={() => {
+                            setLevel('Easy');
+                            navigator.vibrate([25, 30, 40]);
+                        }}
                         className="chooselvl__btn"
                     >
                         Easy
                     </button>
                 </li>
                 <li className="chooselvl__item">
-                    <button className="chooselvl__btn">Normal</button>
+                    <button
+                        onClick={() => {
+                            setLevel('Normal');
+                            navigator.vibrate([25, 40, 60, 70]);
+                        }}
+                        className="chooselvl__btn"
+                    >
+                        Normal
+                    </button>
                 </li>
                 <li className="chooselvl__item">
-                    <button className="chooselvl__btn">Hard</button>
+                    <button
+                        onClick={() => {
+                            setLevel('Hard');
+                            navigator.vibrate([25, 50, 100]);
+                        }}
+                        className="chooselvl__btn"
+                    >
+                        Hard
+                    </button>
                 </li>
             </ul>
         </div>

@@ -1,6 +1,6 @@
 import Card from './components/Card';
 import './App.css';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import EndGame from './components/EndGame';
 import StartGame from './components/StartGame';
 
@@ -64,16 +64,38 @@ function App() {
         }
         setRandomColors(copy);
     }
+    // this piece for the future update of the hard levels
+
+    function createColors(quantity) {
+        let tempArr = [];
+        for (let i = 0; i < quantity; i++) {
+            let randomColor = `#${Math.floor(Math.random() * 0xffffff)
+                .toString(16)
+                .padEnd(6, '0')}`;
+            if (!tempArr.includes(randomColor)) {
+                tempArr.push(randomColor);
+            }
+        }
+        const copyTempArr = tempArr.map((element) => element);
+        for (let i = 0; i < copyTempArr.length; i++) {
+            tempArr.push(copyTempArr[i]);
+        }
+        shuffleArray(tempArr);
+        // setRandomColors(tempArr);
+    }
     useEffect(() => {
         shuffleArray(randomColors);
     }, []);
-    // this piece for the future update of the hard levels
-    // const randomColor = `#${Math.floor(Math.random() * 0xffffff)
-    //     .toString(16)
-    //     .padEnd(6, '0')}`;
-    // console.log(randomColor);
     useEffect(() => {
-        if (level === 'Easy') {
+        if (level === 'Normal') {
+            createColors(8);
+        }
+
+        // console.log(randomColor);
+    }, [level]);
+
+    useEffect(() => {
+        if (level !== '') {
             document.querySelector('.startgame').classList.add('dn');
         }
         if (chosen.length === 2) {
@@ -86,11 +108,13 @@ function App() {
                 temp.pop();
                 setTimeout(() => {
                     setOpened(temp);
+                    navigator.vibrate([25, 40, 60]);
                 }, 500);
             }
             setChosen([]);
         }
         if (opened.length === randomColors.length) {
+            navigator.vibrate([25, 50, 100, 200]);
             setScore(Math.floor((randomColors.length / counter) * 100));
             console.log(`Your score = ${score}`);
         }
@@ -109,21 +133,56 @@ function App() {
             <StartGame setLevel={setLevel}></StartGame>
             {opened.length === randomColors.length && <EndGame score={score} />}
 
-            <h1 className="app__title">Click on card and try to find couple</h1>
-            <div className="cards">
-                {randomColors.map((color, index) => {
-                    return (
-                        <Card
-                            color={color}
-                            opened={opened}
-                            setOpened={setOpened}
-                            id={index}
-                            key={index}
-                            handleCardClick={handleCardClick}
-                        />
-                    );
-                })}
-            </div>
+            {level === 'Easy' && (
+                <>
+                    <h1 className="app__title">
+                        Click on card and try to find couple
+                    </h1>
+                    <div className="cards">
+                        {randomColors.map((color, index) => {
+                            return (
+                                <Card
+                                    color={color}
+                                    opened={opened}
+                                    setOpened={setOpened}
+                                    id={index}
+                                    key={index}
+                                    handleCardClick={handleCardClick}
+                                />
+                            );
+                        })}
+                    </div>
+                </>
+            )}
+            {level === 'Normal' && (
+                <>
+                    <h1 className="app__title">
+                        Click on card and try to find couple
+                    </h1>
+                    <div className="cards">
+                        {randomColors.map((color, index) => {
+                            return (
+                                <Card
+                                    color={color}
+                                    opened={opened}
+                                    setOpened={setOpened}
+                                    id={index}
+                                    key={index}
+                                    handleCardClick={handleCardClick}
+                                />
+                            );
+                        })}
+                    </div>
+                </>
+            )}
+            {level === 'Hard' && (
+                <>
+                    <h1 className="app__title">
+                        It's time to rest for the developer, so play on more
+                        easier levels, good luck ;)
+                    </h1>
+                </>
+            )}
         </div>
     );
 }

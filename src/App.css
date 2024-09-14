@@ -12,7 +12,8 @@ li {
     display: flex;
     flex-direction: column;
     justify-content: center;
-
+    min-width: 100vw;
+    min-height: 100vh;
     position: relative;
     padding: 20px;
 
@@ -220,5 +221,11 @@ li {
     .endgame {
         height: 100%;
         padding: 20px;
+    }
+    .startgame {
+        padding: 15px;
+    }
+    .chooselvl {
+        flex-direction: column;
     }
 }

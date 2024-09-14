@@ -9,7 +9,10 @@ function EndGame({ score }) {
             </p>
             <button
                 className="endgame__btn"
-                onClick={() => window.location.reload()}
+                onClick={() => {
+                    navigator.vibrate([25, 50, 70]);
+                    window.location.reload();
+                }}
             >
                 New Game
             </button>
