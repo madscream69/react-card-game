@@ -1,8 +1,10 @@
 import Card from './components/Card';
 import './App.css';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import Timer from './components/Timer';
 import EndGame from './components/EndGame';
 import StartGame from './components/StartGame';
+import BadEnd from './components/BadEnd';
 
 // let randomColors = [
 //     '#EB6424',
@@ -93,7 +95,13 @@ function App() {
 
         // console.log(randomColor);
     }, [level]);
+    useEffect(() => {
+        if (level === 'Hard') {
+            createColors(10);
+        }
 
+        // console.log(randomColor);
+    }, [level]);
     useEffect(() => {
         if (level !== '') {
             document.querySelector('.startgame').classList.add('dn');
@@ -128,10 +136,22 @@ function App() {
             setChosen([...chosen, randomColors[id]]);
         }
     };
+    const [timeIsUp, setTimeIsUp] = useState(false);
+    const [prematurely, setPrematurely] = useState(false);
+    const [seconds, setSeconds] = useState(30);
+    useEffect(() => {
+        if (opened.length === randomColors.length) {
+            setPrematurely(true);
+            console.log(prematurely);
+        }
+    }, [opened, randomColors, prematurely]);
+
     return (
         <div className="App">
             <StartGame setLevel={setLevel}></StartGame>
-            {opened.length === randomColors.length && <EndGame score={score} />}
+            {opened.length === randomColors.length && (
+                <EndGame seconds={seconds} score={score} />
+            )}
 
             {level === 'Easy' && (
                 <>
@@ -177,10 +197,30 @@ function App() {
             )}
             {level === 'Hard' && (
                 <>
+                    {timeIsUp && <BadEnd />}
                     <h1 className="app__title">
-                        It's time to rest for the developer, so play on more
-                        easier levels, good luck ;)
+                        Click on card and try to find couple
                     </h1>
+                    <Timer
+                        setTimeIsUp={setTimeIsUp}
+                        prematurely={prematurely}
+                        seconds={seconds}
+                        setSeconds={setSeconds}
+                    ></Timer>
+                    <div className="cards">
+                        {randomColors.map((color, index) => {
+                            return (
+                                <Card
+                                    color={color}
+                                    opened={opened}
+                                    setOpened={setOpened}
+                                    id={index}
+                                    key={index}
+                                    handleCardClick={handleCardClick}
+                                />
+                            );
+                        })}
+                    </div>
                 </>
             )}
         </div>

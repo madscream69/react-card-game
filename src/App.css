@@ -4,6 +4,9 @@
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
 }
+body {
+    overflow-x: hidden;
+}
 li {
     list-style-type: none;
 }
@@ -131,7 +134,7 @@ li {
 }
 .endgame {
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     background-color: #000000b5;
     position: absolute;
     top: 0;

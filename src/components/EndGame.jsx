@@ -1,4 +1,4 @@
-function EndGame({ score }) {
+function EndGame({ score, seconds }) {
     return (
         <div className="endgame">
             <h2 className="endgame__title">
@@ -7,6 +7,11 @@ function EndGame({ score }) {
             <p className="endgame__text">
                 Your score is: <span>{score}</span> points!
             </p>
+            {seconds < 30 && (
+                <p className="endgame__text">
+                    Time left: <span>{seconds}</span> seconds!
+                </p>
+            )}
             <button
                 className="endgame__btn"
                 onClick={() => {
